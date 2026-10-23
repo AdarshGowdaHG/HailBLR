@@ -1,0 +1,15 @@
+services:
+  mongo:
+    image: mongo:7
+    volumes: [mongo-data:/data/db]
+  backend:
+    build: ./backend
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+    depends_on: [mongo]
+  frontend:
+    build: ./frontend
+    ports: ["8080:80"]
+    depends_on: [backend]
+volumes:
+  mongo-data:
